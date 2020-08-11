@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import TaskSerializer
+from .serializers import *
 from .models import Task
 from rest_framework import status,generics
 from rest_framework.decorators import api_view, permission_classes
@@ -42,6 +42,9 @@ def update_Tasks(request,task_id):
         return JsonResponse({'error':str(e)},safe=False,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class getTasks(generics.ListCreateAPIView):
-    queryset=Task.objects.all()
-    serializer_class=TaskSerializer
+# class getTasks(generics.ListCreateAPIView):
+#     queryset=Task.objects.all()
+#     serializer_class=TaskSerializer
+class getTaskTrackers(generics.ListCreateAPIView):
+    queryset=TaskTracker.objects.all()
+    serializer_class=TaskTrackerSerializer
