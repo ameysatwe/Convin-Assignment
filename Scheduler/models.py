@@ -8,8 +8,10 @@ def validateTask(value):
     return value 
 class Task(models.Model):
     ##fields will go here
-    task_type=models.IntegerField()
-    task_desc=models.CharField(max_length=100)
+    task_type=models.IntegerField(help_text="Enter Task Type",blank=False)
+    task_desc=models.CharField(max_length=100,help_text="Enter Task Description",blank=False)
+    
+    
     def __str__(self):
         return f"Task type is {self.task_type}"
 
@@ -17,12 +19,13 @@ class Task(models.Model):
 
 class TaskTracker(models.Model):
     Update_Types=[
-        ('da','per-day'),
-        ('we','Weekly'),
-        ('mo','Monthly')
+        ('daily','per-day'),
+        ('weekly','Weekly'),
+        ('monthly','Monthly')
     ]
     task_type=models.ForeignKey(Task,on_delete=models.CASCADE)
-    update_type=models.CharField(max_length=10,choices=Update_Types,default='da')
-    email=models.EmailField()
+    update_type=models.CharField(max_length=10,choices=Update_Types,default='daily')
+    email=models.EmailField(help_text="Enter Email for updates",blank=False,unique=True)
+ 
     def __str__(self):
-        return f"email is {self.email}"
+        return f"Task type is {self.task_type}"
