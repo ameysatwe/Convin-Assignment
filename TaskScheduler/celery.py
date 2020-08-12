@@ -1,11 +1,12 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
-
+from dotenv import load_dotenv
 from celery import Celery
 from django.conf import settings
 from celery.schedules import crontab
 # set the default Django settings module for the 'celery' program.
+load_dotenv()
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'TaskScheduler.settings')
 
 app = Celery('TaskScheduler')
@@ -17,7 +18,7 @@ app = Celery('TaskScheduler')
 app.config_from_object('django.conf:settings')
 
 # Load task modules from all registered Django app configs.
-
+app.conf.broker_url=os.getenv("CELERY_URI")
 app.conf.update(result_expires=3600,enable_utc=True,timezone='Asia/Kolkata')
 
 app.conf.beat_schedule={

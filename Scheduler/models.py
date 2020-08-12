@@ -3,12 +3,12 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 def validateTask(value):
-    if value>4:
-        raise ValidationError("This Field only accepts tpe <4")
+    if (value>4 or value<0):
+        raise ValidationError("This Field only accepts type less than 4 and greater than 0")
     return value 
 class Task(models.Model):
     ##fields will go here
-    task_type=models.IntegerField(help_text="Enter Task Type",blank=False)
+    task_type=models.IntegerField(help_text="Enter Task Type",blank=False,validators=[validateTask])
     task_desc=models.CharField(max_length=100,help_text="Enter Task Description",blank=False)
     
     

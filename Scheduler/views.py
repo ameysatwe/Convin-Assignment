@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import routers,viewsets
 from .serializers import *
 from .models import *
-
+#from TaskScheduler.tasks import send_email_task
 
 
 class TaskView(viewsets.ModelViewSet):
@@ -16,3 +16,7 @@ class TaskTrackerView(viewsets.ModelViewSet):
 router=routers.DefaultRouter()
 router.register(r'task',TaskView)
 router.register(r'tracker',TaskTrackerView)
+
+def index(request):
+    send_email_task()
+    return HttpResponse("Email Was Sent")
